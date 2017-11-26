@@ -14,7 +14,7 @@
 /* PAM entry point for session creation */
 int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **argv) {
   printf("%s\n", "coucou");
-        return(PAM_IGNORE);
+        return(PAM_SUCCESS);
 }
 
 /* PAM entry point for session cleanup */
