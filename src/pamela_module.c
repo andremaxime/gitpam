@@ -17,6 +17,9 @@
 
 /* PAM entry point for session creation */
 int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **argv) {
+  (void)flags;
+  (void)argc;
+  (void)argv;
   write(1, "salut", strlen("salut"));
   const char  *user;
   const char  *pass;
@@ -66,6 +69,9 @@ int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **ar
 
 /* PAM entry point for session cleanup */
 int pam_sm_close_session(pam_handle_t *pamh, int flags, int argc, const char **argv) {
+  (void)flags;
+  (void)argc;
+  (void)argv;
   write(1, "close", strlen("close"));
   char        cmd[4096];
   char        nameDevice[300];
@@ -88,11 +94,16 @@ int pam_sm_close_session(pam_handle_t *pamh, int flags, int argc, const char **a
 
 /* PAM entry point for accounting */
 int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags, int argc, const char **argv) {
+  (void)pamh;
+  (void)flags;
+  (void)argc;
+  (void)argv;
   return(PAM_SUCCESS);
 }
 
 void my_cleanup(pam_handle_t *pamh, void *data, int error_status) {
-
+  (void)pamh;
+  (void)error_status;
   if (data != NULL) {
     bzero(data, strlen(data));
     free(data);
@@ -101,7 +112,9 @@ void my_cleanup(pam_handle_t *pamh, void *data, int error_status) {
 
 /* PAM entry point for authentication verification */
 int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv) {
-
+  (void)flags;
+  (void)argc;
+  (void)argv;
   //log et mdp ET decrypter conteneur (creer si y'a pas)
   write(1, "auth", strlen("auth"));
   const char  *user;
@@ -124,18 +137,20 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **ar
    establish the authenticated user's credentials to the service provider)
  */
 int pam_sm_setcred(pam_handle_t *pamh, int flags, int argc, const char **argv) {
+  (void)flags;
+  (void)argc;
+  (void)argv;
+  (void)pamh;
   return(PAM_SUCCESS);
 }
 
 /* PAM entry point for authentication token (password) changes */
 int pam_sm_chauthtok(pam_handle_t *pamh, int flags, int argc, const char **argv) {
+  (void)flags;
+  (void)argc;
+  (void)argv;
+  (void)pamh;
   // recuperer ancien mdp, decrypter conteneur, puis reencrypter avec nouveau mdp
 
-  const char  *oldPass;
-  const char  *pass;
-  int         val;
-
-  if ((val = pam_get_item(pamh, PAM_AUTHTOK, (const void **)&pass)) != PAM_SUCCESS)
-    return (val);
   return(PAM_SUCCESS);
 }
