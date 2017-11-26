@@ -17,7 +17,7 @@ CFLAGS = -W -Wall -Wextra -Werror -fPIC -DPIC -shared -rdynamic
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	 $(CC) $(OBJS) -libcryptsetup -o $(NAME)
+	 $(CC) $(OBJS) -lcryptsetup -o $(NAME)
 
 install:
 ifneq ("$(wildcard /lib/security)", "")
