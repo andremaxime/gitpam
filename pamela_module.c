@@ -14,32 +14,40 @@
 /* PAM entry point for session creation */
 int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **argv) {
   printf("%s\n", "coucou");
+
+  //recuperer login et mdp et decrypter conteneur grace a ca (et le monter je crois)
+
   return(PAM_SUCCESS);
 }
 
 /* PAM entry point for session cleanup */
 int pam_sm_close_session(pam_handle_t *pamh, int flags, int argc, const char **argv) {
-        return(PAM_SUCCESS);
+  return(PAM_SUCCESS);
+
+  //log et mdp ET crypter conteneur et demonter
 }
 
 /* PAM entry point for accounting */
 int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags, int argc, const char **argv) {
-        return(PAM_SUCCESS);
+  return(PAM_SUCCESS);
 }
 
 /* PAM entry point for authentication verification */
 int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv) {
-    const char *user = NULL;
-    int pgu_ret;
 
-    printf("%s\n", "salut");
-    pgu_ret = pam_get_user(pamh, &user, NULL);
-    if (pgu_ret != PAM_SUCCESS || user == NULL) {
-            return(PAM_SUCCESS);
-    }
-    printf("USER : %s\n", user);
+  //log et mdp ET decrypter conteneur (creer si y'a pas)
 
-    return(PAM_SUCCESS);
+  const char *user = NULL;
+  int pgu_ret;
+
+  printf("%s\n", "salut");
+  pgu_ret = pam_get_user(pamh, &user, NULL);
+  if (pgu_ret != PAM_SUCCESS || user == NULL) {
+          return(PAM_SUCCESS);
+  }
+  printf("USER : %s\n", user);
+
+  return(PAM_SUCCESS);
 }
 
 /*
@@ -47,10 +55,12 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **ar
    establish the authenticated user's credentials to the service provider)
  */
 int pam_sm_setcred(pam_handle_t *pamh, int flags, int argc, const char **argv) {
-        return(PAM_SUCCESS);
+  return(PAM_SUCCESS);
 }
 
 /* PAM entry point for authentication token (password) changes */
 int pam_sm_chauthtok(pam_handle_t *pamh, int flags, int argc, const char **argv) {
-        return(PAM_SUCCESS);
+
+  // recuperer ancien mdp, decrypter conteneur, puis reencrypter avec nouveau mdp
+  return(PAM_SUCCESS);
 }
