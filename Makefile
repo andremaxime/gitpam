@@ -22,7 +22,7 @@ $(NAME): $(OBJS)
 	 $(CC) $(OBJS) -shared -rdynamic $(LDFLAGS) -o $(NAME)
 
 install:
-ifneq ("$(wildcard /lib/x86_64-linux-gnu/security/$(NAME))", "")
+ifneq ("/lib/x86_64-linux-gnu/security/", "")
 	@printf "\033[0;31mPAM module already installed\n\033[0m"
 else
 	apt-get install -y libcryptsetup-dev libpam0g-dev gcc
@@ -35,12 +35,11 @@ else
 endif
 
 uninstall:
-ifeq ("$(wildcard /lib/x86_64-linux-gnu/security/$(NAME))", "")
+ifeq ("/lib/x86_64-linux-gnu/security/$(NAME)", "")
 	@printf "\033[0;31mPAM module not installed\n\033[0m"
 else
 	make clean
 	@$(RM) /lib/x86_64-linux-gnu/security/$(NAME)
-	@$(RM) /home/$USER/secure_data-rw
 	@head -n -1 /etc/pam.d/common-auth > /tmp/common-auth && mv /tmp/common-auth /etc/pam.d/common-auth
 	@head -n -1 /etc/pam.d/common-session > /tmp/common-session && mv /tmp/common-session /etc/pam.d/common-session
 	@printf "\033[0;32mPAM module uninstalled successfully\n\033[0m"
