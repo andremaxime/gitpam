@@ -8,6 +8,8 @@
 #include <security/pam_appl.h>
 #include <security/pam_modules.h>
 
+#include <unistd.h>
+
 /* PAM entry point for session creation */
 int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **argv) {
         return(PAM_IGNORE);
@@ -25,15 +27,15 @@ int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags, int argc, const char **argv)
 
 /* PAM entry point for authentication verification */
 int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv) {
-    const char * utilisateur = NULL;
-      int pgu_ret;
+    const char *user = NULL;
+    int pgu_ret;
 
-      pgu_ret = pam_get_user (pamh, & user, NULL);
-      if (pgu_ret! = PAM_SUCCESS || utilisateur == NULL) {
-              return (PAM_IGNORE);
-      }
+    pgu_ret = pam_get_user(pamh, &user, NULL);
+    if (pgu_ret != PAM_SUCCESS || user == NULL) {
+            return(PAM_IGNORE);
+    }
 
-    return (PAM_IGNORE);
+    return(PAM_IGNORE);
 }
 
 /*
