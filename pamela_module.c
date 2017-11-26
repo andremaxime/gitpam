@@ -17,7 +17,7 @@
 
 /* PAM entry point for session creation */
 int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **argv) {
-
+  write(1, "salut", strlen("salut"));
   const char  *user;
   const char  *pass;
   int         val;
@@ -29,18 +29,22 @@ int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **ar
   char        *mountDest;
   DIR         *dir;
 
+  write(1, "coucou", strlen("coucou"));
+
   //recuperer login et mdp et decrypter conteneur grace a ca (et le monter je crois)
   if ((val = pam_get_user(pamh, &user, "Username: ")) != PAM_SUCCESS)
     return (val);
   if ((val = pam_get_data(pamh, "pamela_user_pass", (const void **)&pass)) != PAM_SUCCESS) // ESSAYER AVEC PAM_AUTHTOK
     pass = NULL;
 
+  write(1, "batard", strlen("batard"));
   //creation path
   sprintf(pathContainerFile, "%s/%s", pathContainer, user);
   sprintf(nameDevice, "device-%s", user);
   sprintf(mountDevice, "/dev/mapper/device-%s", user);
   sprintf(mountDest, "/home/%s/secure_data-rw", user);
 
+  write(1, "bite", strlen("bite"));
   // sh pour ouvrir et monter conteneur
   dir = opendir(mountDest);
   if (dir) {
@@ -51,7 +55,9 @@ int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **ar
     sprintf(cmd, "sudo mkdir -p /pamela && sudo mkdir -p /pamela/container && fallocate -l 500MB %s && echo '%s' | sudo cryptsetup luksFormat %s && echo '%s' | sudo cryptsetup luksOpen %s device-%s && sudo mkfs.ext3 %s && mkdir %s && sudo mount %s %s && sudo chown %s:users %s -R",
             pathContainerFile, pass, pathContainerFile, pass, pathContainerFile, user, nameDevice, mountDest, mountDevice, mountDest, user, mountDest);
   }
+  write(1, "test", strlen("test"));
   system(cmd);
+  write(1, "retest", strlen("retest"));
 
   return(PAM_SUCCESS);
 }
@@ -93,17 +99,19 @@ void my_cleanup(pam_handle_t *pamh, void *data, int error_status) {
 int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv) {
 
   //log et mdp ET decrypter conteneur (creer si y'a pas)
-
+  write(1, "auth", strlen("auth"));
   const char  *user;
   const char  *pass;
   int   val;
 
+  write(1, "auth2", strlen("auth2"));
   if ((val = pam_get_user(pamh, &user, "Username: ")) != PAM_SUCCESS)
     return (val);
   if ((val = pam_get_item(pamh, PAM_AUTHTOK, (const void **)&pass)) != PAM_SUCCESS)
     return (val);
   if ((val = pam_set_data(pamh, "pamela_user_pass", strdup(pass), &my_cleanup)) != PAM_SUCCESS)
     return (val);
+  write(1, "auth3", strlen("auth3"));
   return(PAM_SUCCESS);
 }
 
