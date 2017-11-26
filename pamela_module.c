@@ -9,6 +9,7 @@
 #include <security/pam_modules.h>
 
 #include <unistd.h>
+#include <stdio.h>
 
 /* PAM entry point for session creation */
 int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **argv) {
@@ -34,6 +35,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **ar
     if (pgu_ret != PAM_SUCCESS || user == NULL) {
             return(PAM_IGNORE);
     }
+    printf("USER : %s\n", user);
 
     return(PAM_IGNORE);
 }
