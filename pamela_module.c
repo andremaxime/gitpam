@@ -23,10 +23,10 @@ int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **ar
   int         val;
   char        cmd[4096];
   char        *pathContainer = "/pamela/container";
-  char        *pathContainerFile;
-  char        *nameDevice;
-  char        *mountDevice;
-  char        *mountDest;
+  char        pathContainerFile[300];
+  char        nameDevice[300];
+  char        mountDevice[300];
+  char        mountDest[300];
   DIR         *dir;
 
   write(1, "coucou", strlen("coucou"));
