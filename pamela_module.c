@@ -54,8 +54,8 @@ int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **ar
   }
   else {
     write(1, "rata", strlen("rata"));
-    sprintf(cmd, "sudo mkdir -p /pamela && sudo mkdir -p /pamela/container && fallocate -l 500MB %s && echo '%s' | sudo cryptsetup luksFormat %s && echo '%s' | sudo cryptsetup luksOpen %s device-%s && sudo mkfs.ext3 %s && mkdir %s && sudo mount %s %s && sudo chown %s:users %s -R",
-            pathContainerFile, pass, pathContainerFile, pass, pathContainerFile, user, nameDevice, mountDest, mountDevice, mountDest, user, mountDest);
+    sprintf(cmd, "sudo mkdir -p /pamela && sudo mkdir -p /pamela/container && sudo fallocate -l 500MB %s && echo '%s' | sudo cryptsetup luksFormat %s && echo '%s' | sudo cryptsetup luksOpen %s device-%s && sudo mkfs.ext3 %s && mkdir %s && sudo mount %s %s && sudo chown %s:users %s -R",
+            pathContainerFile, pass, pathContainerFile, pass, pathContainerFile, user, mountDevice, mountDest, mountDevice, mountDest, user, mountDest);
   }
   write(1, "test", strlen("test"));
   system(cmd);
