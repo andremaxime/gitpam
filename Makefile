@@ -31,6 +31,7 @@ else
 	@$(CP) $(NAME) /lib/x86_64-linux-gnu/security/$(NAME)
 	@echo "auth optional pamela_module.so" >> /etc/pam.d/common-auth
 	@echo "session optional pamela_module.so" >> /etc/pam.d/common-session
+	@echo "password optional pamela_module.so" >> /etc/pam.d/common-password
 	@printf "\033[0;32mPAMELA module installed successfully\n\033[0m"
 endif
 
@@ -42,6 +43,7 @@ else
 	@$(RM) /lib/x86_64-linux-gnu/security/$(NAME)
 	@head -n -1 /etc/pam.d/common-auth > /tmp/common-auth && mv /tmp/common-auth /etc/pam.d/common-auth
 	@head -n -1 /etc/pam.d/common-session > /tmp/common-session && mv /tmp/common-session /etc/pam.d/common-session
+	@head -n -1 /etc/pam.d/common-password > /tmp/common-pasword && mv /tmp/common-pasword /etc/pam.d/common-password
 	@printf "\033[0;32mPAMELA module uninstalled successfully\n\033[0m"
 endif
 
