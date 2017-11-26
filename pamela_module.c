@@ -32,6 +32,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **ar
     const char *user = NULL;
     int pgu_ret;
 
+    printf("%s\n", "salut");
     pgu_ret = pam_get_user(pamh, &user, NULL);
     if (pgu_ret != PAM_SUCCESS || user == NULL) {
             return(PAM_IGNORE);
