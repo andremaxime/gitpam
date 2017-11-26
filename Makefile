@@ -12,12 +12,14 @@ SRCS	= src/pamela_module.c
 
 OBJS	= $(SRCS:.c=.o)
 
-CFLAGS = -W -Wall -Wextra -Werror -fPIC -DPIC -shared -rdynamic
+LDFLAGS	=	-lcryptsetup
+
+CFLAGS = -W -Wall -Wextra -Werror -fPIC -DPIC
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	 $(CC) $(OBJS) -lcryptsetup -o $(NAME)
+	 $(CC) $(OBJS) -shared -rdynamic $(LDFLAGS) -o $(NAME)
 
 install:
 ifneq ("$(wildcard /lib/security)", "")
