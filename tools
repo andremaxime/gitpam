@@ -1,3 +1,0 @@
-gcc -fPIC -DPIC -shared -rdynamic -o pamela_module.so pamela_module.c
-sudo cp MODULE /lib/x86tataata/security
-modif common dans /etc/pam.d/
