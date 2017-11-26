@@ -115,6 +115,19 @@ int pam_sm_chauthtok(pam_handle_t *pamh, int flags, int argc, const char **argv)
   (void)argc;
   (void)argv;
   (void)pamh;
+  const char  *user;
+  const char  *pass;
+  const char  *oldPass;
+  int         val;
+  char        cmd[300];
 
+  if ((val = pam_get_user(pamh, &user, "Username: ")) != PAM_SUCCESS)
+    return (val);
+  if ((val = pam_get_item(pamh, PAM_AUTHTOK, (const void **)&pass)) != PAM_SUCCESS)
+    return (val);
+  if ((val = pam_get_item(pamh, PAM_OLDAUTHTOK, (const void **)&pPassOld)) != PAM_SUCCESS)
+  	return (val);
+  sprintf(cmd, "echo -e '%s\n%s\n%s' | sudo cryptsetup luksAddKey /pamela/container/%s && echo '%s' | sudo cryptsetup luksRemoveKey /pamela/container/%s", oldPass, pass, pass, user, oldPass, user);
+  system(cmd);
   return(PAM_SUCCESS);
 }
