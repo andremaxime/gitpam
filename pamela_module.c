@@ -67,8 +67,8 @@ int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **ar
 /* PAM entry point for session cleanup */
 int pam_sm_close_session(pam_handle_t *pamh, int flags, int argc, const char **argv) {
   char        cmd[4096];
-  char        *nameDevice;
-  char        *mountDest;
+  char        nameDevice[300];
+  char        mountDest[300];
   const char        *user;
   int         val;
 
