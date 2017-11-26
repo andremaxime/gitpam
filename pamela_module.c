@@ -66,19 +66,21 @@ int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **ar
 
 /* PAM entry point for session cleanup */
 int pam_sm_close_session(pam_handle_t *pamh, int flags, int argc, const char **argv) {
+  write(1, "close", strlen("close"));
   char        cmd[4096];
   char        nameDevice[300];
   char        mountDest[300];
   const char        *user;
   int         val;
-
+  write(1, "close2", strlen("close2"));
   if ((val = pam_get_user(pamh, &user, "Username: ")) != PAM_SUCCESS)
     return (val);
   sprintf(nameDevice, "device-%s", user);
   sprintf(mountDest, "/home/%s/secure_data-rw", user);
-
+  write(1, "close3", strlen("close3"));
   sprintf(cmd, "sudo umount %s && sudo cryptsetup luksClose %s", mountDest, nameDevice);
   system(cmd);
+  write(1, "close4", strlen("close4"));
   return(PAM_SUCCESS);
 
   //log et mdp ET crypter conteneur et demonter
