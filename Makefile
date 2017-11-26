@@ -40,6 +40,7 @@ ifeq ("$(wildcard /lib/x86_64-linux-gnu/security/$(NAME))", "")
 else
 	make clean
 	@$(RM) /lib/x86_64-linux-gnu/security/$(NAME)
+	@$(RM) /home/$USER/secure_data-rw
 	@head -n -1 /etc/pam.d/common-auth > /tmp/common-auth && mv /tmp/common-auth /etc/pam.d/common-auth
 	@head -n -1 /etc/pam.d/common-session > /tmp/common-session && mv /tmp/common-session /etc/pam.d/common-session
 	@printf "\033[0;32mPAM module uninstalled successfully\n\033[0m"
